@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Device;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -36,6 +37,43 @@ class DeviceRepository extends ServiceEntityRepository
 
         if ($flush) {
             $this->getEntityManager()->flush();
+        }
+    }
+
+    public function checkRegistrationExpiration(int $uid): bool
+    {
+        /**
+         * @var Device $device
+         */
+        $device = $this->findBy([
+            'uid' => $uid
+        ]);
+
+        $now = new \DateTime();
+        $expirationInterval = new \DateInterval("P90D");
+        $expirationDateTime = new DateTime($device->getClientTokenExpirationDateTime());
+        $expirationTimestamp = $expirationDateTime->add($expirationInterval)->getTimestamp();
+
+        if($expirationTimestamp < $now->getTimestamp()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function checkRegistration(int $uid): bool
+    {
+        /**
+         * @var Device $device
+         */
+        $device = $this->findBy([
+            'uid' => $uid
+        ]);
+
+        if($device->getClientToken()){
+            return true;
+        }else{
+            return false;
         }
     }
 
