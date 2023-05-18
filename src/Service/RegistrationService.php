@@ -7,7 +7,6 @@ use App\Repository\DeviceRepository;
 
 class RegistrationService
 {
-    private Device $device;
     private DeviceRepository $deviceRepository;
 
     public function __construct(DeviceRepository $deviceRepository)
@@ -15,28 +14,21 @@ class RegistrationService
         $this->deviceRepository = $deviceRepository;
     }
 
-    public function register(Device $device)
-    {
-        $this->device = $device;
-    }
-
     public function checkRegistration(int $uid): bool
     {
-        return $this->deviceRepository->checkRegistration($uid);
+        /**
+         * @var Device $device
+         */
+        $device = $this->deviceRepository->getDeviceByUid($uid);
+        if(!is_null($device) && $device->getClientToken()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function checkRegistrationExpiration(int $uid): bool
     {
         return $this->deviceRepository->checkRegistrationExpiration($uid);
-    }
-
-    public function generateClientToken()
-    {
-
-    }
-
-    public function regenerateClientToken()
-    {
-
     }
 }

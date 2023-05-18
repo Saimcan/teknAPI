@@ -61,20 +61,18 @@ class DeviceRepository extends ServiceEntityRepository
         }
     }
 
-    public function checkRegistration(int $uid): bool
+    public function getDeviceByUid(int $uid): ?Device
     {
-        /**
-         * @var Device $device
-         */
-        $device = $this->findOneBy([
+        return $this->findOneBy([
             'uid' => $uid
         ]);
+    }
 
-        if(!is_null($device) && $device->getClientToken()){
-            return true;
-        }else{
-            return false;
-        }
+    public function getDeviceByClientToken(string $clientToken): ?Device
+    {
+        return $this->findOneBy([
+            'clientToken' => $clientToken
+        ]);
     }
 
 //    /**

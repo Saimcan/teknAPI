@@ -3,7 +3,6 @@
 namespace App\Controller\API\v1;
 
 use App\Entity\Device;
-use App\Entity\Language;
 use App\Factory\APIResponseFactory;
 use App\Repository\DeviceRepository;
 use App\Repository\LanguageRepository;
