@@ -66,11 +66,11 @@ class DeviceRepository extends ServiceEntityRepository
         /**
          * @var Device $device
          */
-        $device = $this->findBy([
+        $device = $this->findOneBy([
             'uid' => $uid
         ]);
 
-        if($device->getClientToken()){
+        if(!is_null($device) && $device->getClientToken()){
             return true;
         }else{
             return false;

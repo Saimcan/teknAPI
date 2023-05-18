@@ -30,6 +30,11 @@ class RegistrationService
         return $this->deviceRepository->checkRegistrationExpiration($uid);
     }
 
+    public function generateClientToken()
+    {
+
+    }
+
     public function regenerateClientToken()
     {
 
