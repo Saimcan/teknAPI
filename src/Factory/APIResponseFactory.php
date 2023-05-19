@@ -8,6 +8,7 @@ class APIResponseFactory
 {
     public const REGISTRATION_SUCCESS = 10;
     public const REGISTRATION_FAILED = 11;
+    public const UNREGISTERED_DEVICE = 12;
     public const SUBSCRIPTION_PRESENT = 20;
     public const SUBSCRIPTION_NOT_PRESENT = 21;
     private int $code;

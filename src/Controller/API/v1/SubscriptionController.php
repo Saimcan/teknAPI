@@ -4,7 +4,7 @@ namespace App\Controller\API\v1;
 
 use App\Factory\APIResponseFactory;
 use App\Repository\DeviceRepository;
-use App\Service\SubscriptionService;
+use App\Service\API\SubscriptionService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,11 +25,11 @@ class SubscriptionController extends AbstractController
 
         try{
             if($subscriptionService->isSubscribed($token)){
-                $apiResponseFactoryInstance = new APIResponseFactory(
-                    APIResponseFactory::SUBSCRIPTION_PRESENT,
-                    'This device is still subscribed.',
-                    'success'
-                );
+                    $apiResponseFactoryInstance = new APIResponseFactory(
+                        APIResponseFactory::SUBSCRIPTION_PRESENT,
+                        'This device is still subscribed.',
+                        'success'
+                    );
             }else{
                 $apiResponseFactoryInstance = new APIResponseFactory(
                     APIResponseFactory::SUBSCRIPTION_NOT_PRESENT,

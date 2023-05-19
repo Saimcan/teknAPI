@@ -18,14 +18,17 @@ class Purchase
     #[ORM\JoinColumn(nullable: false)]
     private ?Device $uid = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private array $details = [];
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private string $details;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateTime = null;
 
     #[ORM\Column]
     private ?bool $isPurchaseSuccess = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $expireDate = null;
 
     public function getId(): ?int
     {
@@ -44,12 +47,12 @@ class Purchase
         return $this;
     }
 
-    public function getDetails(): array
+    public function getDetails(): string
     {
         return $this->details;
     }
 
-    public function setDetails(?array $details): self
+    public function setDetails($details): self
     {
         $this->details = $details;
 
@@ -76,6 +79,18 @@ class Purchase
     public function setIsPurchaseSuccess(bool $isPurchaseSuccess): self
     {
         $this->isPurchaseSuccess = $isPurchaseSuccess;
+
+        return $this;
+    }
+
+    public function getExpireDate(): ?\DateTimeInterface
+    {
+        return $this->expireDate;
+    }
+
+    public function setExpireDate(?\DateTimeInterface $expireDate): self
+    {
+        $this->expireDate = $expireDate;
 
         return $this;
     }
